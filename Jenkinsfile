@@ -64,7 +64,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 // Use the kubeconfig credential to deploy to EKS
-                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG'),
+                [$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-creds']]) {
                     // Update the deployment image to the new tag
                     sh "kubectl set image deployment/finsecure-api finsecure-api=${DOCKER_HUB_REPO}:${IMAGE_TAG} --record"
                     // Wait for the rollout to finish
