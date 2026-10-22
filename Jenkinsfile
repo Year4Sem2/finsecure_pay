@@ -45,10 +45,10 @@ pipeline {
                 // echo 'Security checks will be implemented in Task 5'
                         withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
                     sh """
-                        mvn sonar:sonar \
+                        mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
                         -Dsonar.projectKey=finsecure-api \
                         -Dsonar.host.url=http://host.docker.internal:9000 \
-                        -Dsonar.login=${SONAR_TOKEN}
+                        -Dsonar.login=\${SONAR_TOKEN}
                     """
                 }
             }
