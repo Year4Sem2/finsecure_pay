@@ -22,7 +22,7 @@ public class TransactionController {
     public ResponseEntity<ValidationResponse> validate(@RequestBody TransactionRequest request) {
         List<String> errors = validationService.validate(request);
         if (errors.isEmpty()) {
-            return ResponseEntity.ok(new ValidationResponse(true, "Valid transaction", null));
+            return ResponseEntity.ok(new ValidationResponse(true, "Valid transaction - Jenkins is LIVE", null));
         }
         return ResponseEntity.badRequest()
                 .body(new ValidationResponse(false, "Validation failed", errors));
