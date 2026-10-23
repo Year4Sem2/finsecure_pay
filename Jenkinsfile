@@ -56,7 +56,7 @@ pipeline {
 
         stage('OWASP Dependency Check') {
             steps {
-                sh 'mvn org.owasp:dependency-check-maven:check -DnvdApiKey=97619C49-E69B-4B26-AAC2-162F9753E674'
+                sh 'mvn org.owasp:dependency-check-maven:check -DnvdApiDelay=8000'
             }
         }
 
