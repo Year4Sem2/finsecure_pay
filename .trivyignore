@@ -1,0 +1,5 @@
+# Accepted risk: Fix for CVE-2026-47884 and CVE-2026-47890 is only available in
+# Spring Framework 7.0.9 (Spring Enterprise). Upgrading to 7 breaks Spring Boot 3.5.14
+# test compatibility. Risk accepted until Spring Boot 4.x migration.
+CVE-2026-47884
+CVE-2026-47890

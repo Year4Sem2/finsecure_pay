@@ -72,7 +72,7 @@ pipeline {
 
         stage('Trivy Security Scan') {
             steps {
-                sh "trivy image --exit-code 1 --severity HIGH,CRITICAL zhouyidi/finsecure-transaction-api:${IMAGE_TAG}"
+                sh "trivy image --ignorefile .trivyignore --exit-code 1 --severity HIGH,CRITICAL zhouyidi/finsecure-transaction-api:${IMAGE_TAG}"
             }
         }
 
