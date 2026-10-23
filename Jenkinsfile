@@ -54,12 +54,18 @@ pipeline {
             }
         }
 
-        stage('OWASP Dependency Check') {
+        // stage('OWASP Dependency Check') {
+        //     steps {
+        //         withCredentials([string(credentialsId: 'nvd-api-key', variable: 'NVD_API_KEY')]) {
+        //             sh 'echo "Key length: ${#NVD_API_KEY}"'
+        //             sh "mvn org.owasp:dependency-check-maven:check -DnvdApiKey=\${NVD_API_KEY} -DnvdApiDelay=8000"
+        //         }
+        //     }
+        // }
+        stage('Trivy Security Scan') {
             steps {
-                withCredentials([string(credentialsId: 'nvd-api-key', variable: 'NVD_API_KEY')]) {
-                    sh 'echo "Key length: ${#NVD_API_KEY}"'
-                    sh "mvn org.owasp:dependency-check-maven:check -DnvdApiKey=\${NVD_API_KEY} -DnvdApiDelay=8000"
-                }
+                // Run Trivy directly via Docker, mounting the docker socket so it can scan the image
+                sh "docker run --rm -v //var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image --exit-code 1 --severity HIGH,CRITICAL zhouyidi/finsecure-transaction-api:${IMAGE_TAG}"
             }
         }
 
