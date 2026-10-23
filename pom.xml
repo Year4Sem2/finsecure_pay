@@ -27,6 +27,21 @@
         <spring-framework.version>6.2.19</spring-framework.version>
     </properties>
 
+    <!-- ⬇️ ADD THIS BLOCK HERE ⬇️ -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>7.0.9</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <!-- ⬆️ ADD THIS BLOCK HERE ⬆️ -->
+
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
