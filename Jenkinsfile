@@ -62,15 +62,17 @@ pipeline {
         //         }
         //     }
         // }
-        stage('Trivy Security Scan') {
-            steps {
-                sh "trivy image --exit-code 1 --severity HIGH,CRITICAL zhouyidi/finsecure-transaction-api:${IMAGE_TAG}"
-            }
-        }
+        
         stage('Container Build') {
             steps {
                 sh "docker build -t ${DOCKER_HUB_REPO}:${IMAGE_TAG} ."
                 sh "docker tag ${DOCKER_HUB_REPO}:${IMAGE_TAG} ${DOCKER_HUB_REPO}:latest"
+            }
+        }
+
+        stage('Trivy Security Scan') {
+            steps {
+                sh "trivy image --exit-code 1 --severity HIGH,CRITICAL zhouyidi/finsecure-transaction-api:${IMAGE_TAG}"
             }
         }
 
