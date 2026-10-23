@@ -56,7 +56,9 @@ pipeline {
 
         stage('OWASP Dependency Check') {
             steps {
-                sh 'mvn org.owasp:dependency-check-maven:check -DnvdApiDelay=8000'
+                withCredentials([string(credentialsId: 'nvd-api-key', variable: 'NVD_API_KEY')]) {
+                    sh "mvn org.owasp:dependency-check-maven:check -DnvdApiKey=\${NVD_API_KEY}"
+                }
             }
         }
 
