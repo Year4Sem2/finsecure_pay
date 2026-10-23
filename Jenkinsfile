@@ -64,12 +64,9 @@ pipeline {
         // }
         stage('Trivy Security Scan') {
             steps {
-                // Run Trivy directly via Docker, mounting the docker socket so it can scan the image
-                sh "docker run --rm -v //var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image --docker-host unix:///var/run/docker.sock --exit-code 1 --severity HIGH,CRITICAL zhouyidi/finsecure-transaction-api:${IMAGE_TAG}"
-                
+                sh "trivy image --exit-code 1 --severity HIGH,CRITICAL zhouyidi/finsecure-transaction-api:${IMAGE_TAG}"
             }
         }
-
         stage('Container Build') {
             steps {
                 sh "docker build -t ${DOCKER_HUB_REPO}:${IMAGE_TAG} ."
