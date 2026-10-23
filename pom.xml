@@ -35,6 +35,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.8</version> <!-- Version 1.8 has known CVEs -->
+        </dependency>
     </dependencies>
 
     <build>
@@ -48,6 +53,14 @@
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>3.11.0.3926</version>
             </plugin> -->
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>9.0.9</version>
+                <configuration>
+                    <failBuildOnCVSS>7</failBuildOnCVSS> <!-- The Gate: Fails on High/Critical -->
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

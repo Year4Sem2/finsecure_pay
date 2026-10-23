@@ -54,6 +54,12 @@ pipeline {
             }
         }
 
+        stage('OWASP Dependency Check') {
+            steps {
+                sh 'mvn org.owasp:dependency-check-maven:check'
+            }
+        }
+
         stage('Container Build') {
             steps {
                 sh "docker build -t ${DOCKER_HUB_REPO}:${IMAGE_TAG} ."
