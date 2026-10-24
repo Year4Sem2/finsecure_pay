@@ -3,3 +3,4 @@
 # test compatibility. Risk accepted until Spring Boot 4.x migration.
 CVE-2026-47884
 CVE-2026-47890
+CVE-2026-111497
