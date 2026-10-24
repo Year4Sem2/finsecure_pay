@@ -99,4 +99,14 @@ pipeline {
             }
         }
     }
+
+    post {
+        always {
+            emailext (
+                subject: "Jenkins Build ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Build Status: ${currentBuild.currentResult}",
+                to: 'zhouyidi395@gmail.com' // <-- REPLACE WITH YOUR REAL GMAIL
+            )
+        }
+    }
 }

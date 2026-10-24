@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: finsecure-api-monitor
+  labels:
+    release: prometheus-stack # This must match the Helm release name
+spec:
+  selector:
+    matchLabels:
+      app: finsecure-api # This must match the label in your deployment.yaml
+  namespaceSelector:
+    matchNames:
+    - default # <-- Tell Prometheus to look in the default namespace
+  endpoints:
+  - port: http # This must match the name we just added to service.yaml
+    path: /prometheus
+    interval: 15s

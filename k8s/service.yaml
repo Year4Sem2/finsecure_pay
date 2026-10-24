@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: finsecure-api-service
+  labels:
+    app: finsecure-api   # <-- ADD THIS
 spec:
   type: LoadBalancer
   selector:
@@ -9,3 +11,4 @@ spec:
   ports:
   - port: 80
     targetPort: 8080
+    name: http # <-- ADD THIS LINE
