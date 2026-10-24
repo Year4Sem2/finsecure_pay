@@ -102,10 +102,10 @@ pipeline {
 
     post {
         always {
-            emailext (
+            mail (
+                to: 'zhouyidi395@gmail.com',
                 subject: "Jenkins Build ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: "Build Status: ${currentBuild.currentResult}",
-                to: 'zhouyidi395@gmail.com' // <-- REPLACE WITH YOUR REAL GMAIL
+                body: "Build Status: ${currentBuild.currentResult}"
             )
         }
     }
