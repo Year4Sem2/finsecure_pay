@@ -102,11 +102,43 @@ pipeline {
 
     post {
         always {
-            mail (
-                to: 'zhouyidi395@gmail.com',
-                subject: "Jenkins Build ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: "Build Status: ${currentBuild.currentResult}"
-            )
+            // mail (
+            //     to: 'zhouyidi395@gmail.com',
+            //     subject: "Jenkins Build ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            //     body: "Build Status: ${currentBuild.currentResult}"
+            // )
+            script {
+                // 1. Get the current build log
+                def logContent = currentBuild.rawBuild.getLog(1000).join('\n')
+                
+                // 2. Extract lines that start with [ERROR] or contain "FAILURE!"
+                def errorLines = logContent.readLines().findAll { 
+                    it.contains('[ERROR]') || it.contains('FAILURE!') || it.contains('Tests run:')
+                }.join('\n')
+
+                // 3. If no error lines were found, provide a fallback message
+                if (!errorLines) {
+                    errorLines = "No specific error lines found. Please check the console output."
+                }
+
+                // 4. Send the email with the extracted error lines
+                mail (
+                    to: 'zhouyidi395@gmail.com',
+                    subject: "Jenkins Build ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    body: """
+                        Build Status: ${currentBuild.currentResult}
+                        
+                        Job: ${env.JOB_NAME} #${env.BUILD_NUMBER}
+                        
+                        Error Details:
+                        --------------------------------------------------
+                        ${errorLines}
+                        --------------------------------------------------
+                        
+                        Full Console Output: ${env.BUILD_URL}console
+                    """
+                )
+            }
         }
     }
 }
