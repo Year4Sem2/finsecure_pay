@@ -129,12 +129,7 @@ pipeline {
                         Build Status: ${currentBuild.currentResult}
                         
                         Job: ${env.JOB_NAME} #${env.BUILD_NUMBER}
-                        
-                        Error Details:
-                        --------------------------------------------------
-                        ${errorLines}
-                        --------------------------------------------------
-                        
+                                                
                         Full Console Output: ${env.BUILD_URL}console
                     """
                 )
