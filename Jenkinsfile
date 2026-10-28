@@ -34,7 +34,7 @@ pipeline {
 
         stage('Package') {
             steps {
-                sh 'mvn package -DskipTests'
+                sh 'mvn package -DskipTests' // Bundles your compiled code into a runnable .jar file
             }
         }
 
